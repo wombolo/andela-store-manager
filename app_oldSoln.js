@@ -112,7 +112,7 @@ app_oldSoln.delete('/api/v1/product/:id', (req, res) =>{
         if (product.id === id){
             db.splice(index,1);
 
-            return res.status(404).send({
+            return res.status(200).send({
                 success: 'true',
                 message: 'product deleted',
             });

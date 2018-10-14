@@ -18,15 +18,15 @@ const store =
             "id": 3,
             title: "Tender Loving",
             description: "Book written by Adichie Chimamanda",
-            price: '$10',
-            quantity: '69'
+            price: "$10",
+            quantity: "69"
         },
         {
             "id": 4,
-            title: "Things fall apart",
-            description: "Book written by Chinua Achebe",
-            price: '$42',
-            quantity: '3'
+            "title": "Things fall apart",
+            "description": "Book written by Chinua Achebe",
+            "price": "$42",
+            "quantity": "3"
         }
 
     ];
