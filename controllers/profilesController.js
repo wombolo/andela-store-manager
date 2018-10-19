@@ -9,7 +9,6 @@ class profilesController{
         });
     }
 
-
     //Get a single profile
     static getSingleProfile(req,res){
         const findProfile = profiles.find(profile => profile.id === parseInt(req.params.id, 10));
