@@ -2,4 +2,3 @@
 node_modules/
 app_oldSoln.js
 .coveralls.yml
-coverage/
