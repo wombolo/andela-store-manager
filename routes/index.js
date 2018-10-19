@@ -1,8 +1,8 @@
-import {Router} from 'express';
+const Router = require('express').Router;
 
-import ProductController from '../controllers/productsController';
-import SaleController from '../controllers/salesController';
-import ProfileController from '../controllers/profilesController';
+const ProductController = require('../controllers/productsController');
+const SaleController  = require('../controllers/salesController');
+const ProfileController = require('../controllers/profilesController');
 
 const routes = Router();
 

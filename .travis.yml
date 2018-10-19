@@ -6,8 +6,3 @@ cache:
   - "node_modules"
 after_success:
 - npm run coveralls
-
-deploy:
-  provider: heroku
-  api_key: '1e53e101-3377-4754-b606-f6c534600bd2'
-  on: api_v1
