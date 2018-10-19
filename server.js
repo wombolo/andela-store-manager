@@ -5,14 +5,14 @@ const routes = require('./routes/index');
 const app = express();
 
 //Set port
-const PORT = process.env.PORT || 3600;
+const PORT = process.env.PORT || 3690;
 
 //Configure ap to use bodyparser
 app.use(body_parser.urlencoded({extended: true}));
 app.use(body_parser.json());
 
 //Register routes in app
-app.use('/', routes);
+app.use(routes);
 
 //Start Server
 app.listen(PORT, () =>{
