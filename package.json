@@ -9,7 +9,7 @@
     "test": "mocha --require babel-register tests/*.js --exit",
     "dev": "nodemon --exec babel-node ./server.js",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha tests/*.js ",
-    "coverall": "npm run cover -- --report lcovonly --exit && cat ./coverage/lcov.info | coveralls --exit"
+    "coverall": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",

@@ -5,4 +5,8 @@ cache:
   directories:
   - "node_modules"
 after_success:
+- NODE_ENV=test
 #- npm run coveralls
+- istanbul cover ./node_modules/mocha/bin/_mocha app/tests/test.js
+- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+- rm -rf ./coverage
