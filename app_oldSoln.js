@@ -17,10 +17,6 @@ app_oldSoln.get('/api/v1/products', (req, res) => {
 });
 
 
-
-
-
-
 //Retrieve all single product
 app_oldSoln.get('/api/v1/product/:id', (req, res) =>{
     const id = parseInt(req.params.id,10);

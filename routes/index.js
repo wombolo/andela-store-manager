@@ -5,7 +5,11 @@ const SaleController  = require('../controllers/salesController');
 const ProfileController = require('../controllers/profilesController');
 
 const routes = Router();
+//index route
 
+routes.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
 //Products Routes
 routes.get('/api/v1/products', ProductController.getAllProducts);
 routes.get('/api/v1/product/:id', ProductController.getSingleProduct);

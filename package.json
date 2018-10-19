@@ -8,8 +8,8 @@
     "build": "babel controllers/*.js -d dist",
     "test": "mocha --require babel-register tests/*.js --exit",
     "dev": "nodemon --exec babel-node ./server.js",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha tests/*.js --exit",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha tests/*.js ",
+    "coverall": "npm run cover -- --report lcovonly --exit && cat ./coverage/lcov.info | coveralls --exit"
   },
   "repository": {
     "type": "git",
