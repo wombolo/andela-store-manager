@@ -7,6 +7,6 @@ cache:
 after_success:
 - NODE_ENV=test
 #- npm run coveralls
-- istanbul cover ./node_modules/mocha/bin/_mocha app/tests/test.js
+- istanbul cover ./node_modules/mocha/bin/_mocha tests/*.js
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 - rm -rf ./coverage
