@@ -4,6 +4,7 @@
   "description": "A store Manager api for providing basic e-store functions",
   "main": "server.js",
   "scripts": {
+    "start": "babel-node ./server.js",
     "build": "babel controllers/*.js -d dist",
     "test": "mocha --require babel-register tests/*.js --exit",
     "dev": "nodemon --exec babel-node ./server.js",
