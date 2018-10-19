@@ -1,6 +1,6 @@
 const products = require('../database/products');
 
-class productController {
+class productsController {
     //Get all products
     static getAllProducts(req,res){
         return res.status(200).json({
@@ -25,7 +25,6 @@ class productController {
             message: "Product not found",
         })
     }
-
 
 
     //Update a single product
@@ -68,6 +67,7 @@ class productController {
         const updatedProduct = {
             id: productFound.id,
             title: req.body.title || productFound.title,
+            image: req.body.image || productFound.image,
             description: req.body.description || productFound.description,
             price: req.body.price || productFound.price,
             quantity: req.body.quantity || productFound.quantity
@@ -108,11 +108,6 @@ class productController {
     }
 
 
-
-
-
-
-
     //Create a single product
     static addNewProduct(req,res){
         if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
@@ -124,6 +119,7 @@ class productController {
         const new_product = {
             id: products.length + 1,
             title: req.body.title,
+            image: req.body.image || 'defaultpix.png',
             description: req.body.description,
             price: req.body.price,
             quantity: req.body.quantity
@@ -136,7 +132,6 @@ class productController {
             message: "Product created Successfully",
         })
     }
-
 }
 
-module.exports = productController;
+module.exports = productsController;
