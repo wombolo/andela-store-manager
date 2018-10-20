@@ -5,7 +5,7 @@ const routes = require('./routes/index');
 const app = express();
 
 //Set port
-const PORT = process.env.PORT || 9026;
+const PORT = process.env.PORT || 9096;
 
 //Configure ap to use bodyparser
 app.use(body_parser.urlencoded({extended: true}));
