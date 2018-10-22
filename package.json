@@ -10,7 +10,7 @@
     "testnyc": "nyc mocha tests/*.js --timeout=3000",
     "dev": "nodemon --exec babel-node ./server.js",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha tests/*.js",
-    "coverall": "npm run coverage -- --report lcovonly -- -R spec  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "npm run coverage -- --report lcovonly -- -R spec  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
