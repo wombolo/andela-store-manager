@@ -1,11 +1,11 @@
-const express = require('express');
-const body_parser = require('body-parser');
-const routes = require('./routes/index');
+const express = require('express'),
+    body_parser = require('body-parser'),
+    routes = require('./routes/index');
 
 const app = express();
 
 //Set port
-const PORT = process.env.PORT || 9096;
+const PORT = process.env.PORT || 8919;
 
 //Configure ap to use bodyparser
 app.use(body_parser.urlencoded({extended: true}));
@@ -15,9 +15,10 @@ app.use(body_parser.json());
 app.use(routes);
 
 //Start Server
-app.listen(PORT, () =>{
+//Export for Mocha testing
+
+module.exports = app.listen(PORT, () =>{
     console.log(`Server running on port: ${PORT}`);
 });
 
-//Export for Mocha testing
-module.exports = app;
+// module.exports = app;

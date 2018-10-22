@@ -7,9 +7,10 @@
     "start": "babel-node ./server.js",
     "build": "babel controllers/*.js -d dist",
     "test": "mocha --require babel-register tests/*.js --exit",
+    "testnyc": "nyc mocha tests/*.js --timeout=3000",
     "dev": "nodemon --exec babel-node ./server.js",
-    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha tests/*.js",
-    "coverall": "npm run cover -- --report lcovonly -- -R spec  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha tests/*.js",
+    "coverall": "npm run coverage -- --report lcovonly -- -R spec  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
