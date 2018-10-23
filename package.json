@@ -9,8 +9,8 @@
     "test": "mocha --require babel-register tests/*.js --exit",
     "testnyc": "nyc mocha tests/*.js --timeout=3000",
     "dev": "nodemon --exec babel-node ./server.js",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha tests/*.js",
-    "coveralls": "npm run coverage -- --report lcovonly -- -R spec  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coverage": "istanbul cover --print both ./node_modules/mocha/bin/_mocha tests/*.js",
+    "coveralls": "npm run coverage -- --report lcovonly -- -R spec  && cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "chai-http": "^4.0.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",

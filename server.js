@@ -13,6 +13,11 @@ app.use(body_parser.json());
 
 //Register routes in app
 app.use(routes);
+// app.use('/api/v1/',routes);
+// app.use('*', (req,res) =>{
+    // return
+// });
+
 
 //Start Server
 //Export for Mocha testing
