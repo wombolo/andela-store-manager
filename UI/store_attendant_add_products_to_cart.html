@@ -3,57 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Single Product | Andela Store Manager</title>
+    <title>Add Products to Shopping Cart | Andela Store Manager</title>
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 <div class="container">
-    <div class="clearfix">
-        <div class="col-2 logged-in pull-right"><h6>Welcome admin</h6></div>
+    <div class="">
+        <div class="col-2 logged-in pull-right"><h6>Welcome store attendant </h6></div>
     </div>
     <div class="clearfix">
         <div class="logo">Vy Superstore</div>
     </div>
-    <div class="row clearfix products-grid">
+    <div class="row clearfix">
         <div class="col-10 m-0-auto m-t-5">
-            <h3>Store attendant: Ben Simons</h3>
+            <h3>Add Products to Shopping Cart </h3>
 
-            <div class="row">
-                <div class="col-3">
-                    <figure class="image-holder">
-                        <img src="assets/img/profile/team-7.jpg">
-                    </figure>
+            <form action="" class="form-box">
+                <div class="form-group col-10">
+                    <p>Transaction ID: <code>11543AVF</code></p>
                 </div>
 
-
-                <div class="col-7">
-                    <table border="0" width="100%" class="product-single-table table-striped" cellpadding="15px">
-                        <tr>
-                            <td>Name</td>
-                            <td><h6>Ben Simons</h6></td>
-                        </tr>
-                        <tr>
-                            <td>Total number of sale records created</td>
-                            <td><span class="item-price">67</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Total number of products sold</td>
-                            <td><span>125</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Total worth of goods sold</td>
-                            <td><span>$9535</span></td>
-                        </tr>
-                    </table>
+                <div class="form-group col-10">
+                    <div class="col-3">
+                        <label for="name">Item Name</label>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control" type="text" id="name">
+                    </div>
                 </div>
 
-            </div>
+                <div class="form-group col-10">
+                    <div class="col-3">
+                        <label for="qty">Item Quantity</label>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control" type="number" id="qty">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-3">&nbsp;</div>
+                    <div class="col-7">
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        <button type="reset" class="btn btn-dark">Reset</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-
 
     <footer class="m-t-5">
         <div class="row info">
