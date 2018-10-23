@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Create Product | Andela Store Manager</title>
+    <title>Single Product | Andela Store Manager</title>
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -17,66 +17,40 @@
     </div>
     <div class="row clearfix products-grid">
         <div class="col-10 m-0-auto m-t-5">
-            <h3>Create Product </h3>
+            <h3>Single Product Page</h3>
 
-
-            <form action="" class="form-box">
-
-                <div class="form-group row">
-                    <div class="col-2">
-                        <label for="name">Product Picture</label>
-                    </div>
-
-                    <div class="col-4">
-                        <img src="assets/img/products/product-1.png" style="width: 20%">
-                    </div>
-
-                    <div class="col-4">
-                        <input class="form-control" type="file">
-                        <p>* Only .jpg, .png, .jpeg files allowed</p>
-                    </div>
+            <div class="row">
+                <div class="col-3">
+                    <figure class="image-holder">
+                        <img src="assets/img/products/product-1.png">
+                    </figure>
                 </div>
 
 
-                <div class="form-group row">
-                    <div class="col-2">
-                        <label for="name">Product Name</label>
-                    </div>
-                    <div class="col-8">
-                        <input class="form-control" type="text" id="name">
-                    </div>
+                <div class="col-7">
+                    <table border="0" width="100%" class="product-single-table table-striped" cellpadding="15px">
+                        <tr>
+                            <td>Name</td>
+                            <td><h3>Through a Child's Eyes</h3></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td><span class="item-price"> $ 25</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Quantity Available</td>
+                            <td><span>325</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Minimum Quantity Required</td>
+                            <td><span>5</span></td>
+                        </tr>
+                    </table>
                 </div>
 
-
-                <div class="form-group row">
-                    <div class="col-2">
-                        <label for="price">Product Price</label>
-                    </div>
-                    <div class="col-8">
-                        <input class="form-control" type="number" step=".01" id="price">
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                    <div class="col-2">
-                        <label for="qty">Product Quantity</label>
-                    </div>
-                    <div class="col-8">
-                        <input class="form-control" type="number" id="qty">
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="col-2">
-                        <label>&nbsp;</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="reset" class="btn btn-dark">Reset</button>
-                </div>
-            </form>
-
+            </div>
         </div>
     </div>
 
