@@ -5,6 +5,8 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9a55d63ce9b9eeb3d1c4/test_coverage)](https://codeclimate.com/github/wombolo/andela-store-manager/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9a55d63ce9b9eeb3d1c4/maintainability)](https://codeclimate.com/github/wombolo/andela-store-manager/maintainability)
 
+
+# Andela store manager
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store
 
-API usage coimng soon
+API usage coming soon
