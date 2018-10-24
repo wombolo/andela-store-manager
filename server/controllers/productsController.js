@@ -1,4 +1,5 @@
-const products = require('../database/products');
+import products from '../database/products';
+import validation from './validationLibrary';
 
 class productsController {
     //Get all products
@@ -12,6 +13,11 @@ class productsController {
 
     //Get a single product
     static getSingleProduct(req,res){
+
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please specify a number in the parameters list"})
+
+
         const findProduct = products.find(product => product.id === parseInt(req.params.id, 10));
 
         if (findProduct){
@@ -29,21 +35,17 @@ class productsController {
 
     //Update a single product
     static updateSingleProduct(req,res){
-        // const findProduct = products.find(product => product.id === parseInt(req.params.id, 10));
-        // if (findProduct){
-        //     return res.status(200).json({
-        //         product: findProduct,
-        //         message: "A single product record",
-        //     })
-        // }
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please specify a number in the parameters list"})
 
 
-        if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
+        let validateBody = validation.validateBodyParamsForUpdating(req.body);
+        if (validateBody){
             return res.status(400).json({
-                message: 'A required detail is missing: title, description, price or quantity. Product not created',
-            });
+                message: validateBody,
+                status: 'Validation error'
+            })
         }
-
 
         const id = parseInt(req.params.id,10);
 
@@ -85,19 +87,22 @@ class productsController {
 
     // Delete a single product
     static deleteSingleProduct(req,res){
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please specify a number in the parameters list"})
+
         const id = parseInt(req.params.id,10);
-        let deleted;
+        let remainingProducts;
 
         products.map((product,index) => {
             if (product.id === id){
                 products.splice(index,1);
-                deleted = product;
+                remainingProducts = product;
             }
         });
 
-        if (deleted){
+        if (remainingProducts){
             return res.status(200).json({
-                product: deleted,
+                product: remainingProducts,
                 message: 'product deleted',
             });
         }
@@ -110,16 +115,19 @@ class productsController {
 
     //Create a single product
     static addNewProduct(req,res){
-        if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
+
+        let validateBody = validation.validateBodyParamsForCreating(req.body);
+        if (validateBody){
             return res.status(400).json({
-                message: 'A required detail is missing: title, description, price or quantity. Product not created',
-            });
+                message: validateBody,
+                status: 'Validation error'
+            })
         }
 
         const new_product = {
             id: products.length + 1,
             title: req.body.title,
-            image: req.body.image || 'defaultpix.png',
+            image: req.body.image || 'default_pix.png',
             description: req.body.description,
             price: req.body.price,
             quantity: req.body.quantity
@@ -134,4 +142,4 @@ class productsController {
     }
 }
 
-module.exports = productsController;
+export default productsController;

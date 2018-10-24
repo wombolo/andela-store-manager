@@ -9,4 +9,5 @@
 # Andela store manager
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store
 
-API usage coming soon
+API usage:
+Get all Products: <url>/api/v1/products/

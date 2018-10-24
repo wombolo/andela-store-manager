@@ -29,4 +29,4 @@ const profiles =
             image: "images/pix4.png"
         }
     ];
-module.exports =  profiles;
+export default profiles;
