@@ -9,7 +9,7 @@
     "test": "mocha --require babel-register server/tests/*.js --exit",
     "testnyc": "nyc mocha tests/*.js --timeout=3000",
     "dev": "nodemon --exec babel-node ./server.js",
-    "coveralls": "nyc --require babel-register node_modules/.bin/mocha server/tests/*.js"
+    "coveralls": "nyc --require babel-register --reporter=lcov  node_modules/.bin/mocha server/tests/*.js"
   },
   "repository": {
     "type": "git",

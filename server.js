@@ -1,6 +1,7 @@
 import express from 'express';
 import body_parser from 'body-parser';
 import routes from './server/routes/v1/index.js';
+
 import jwt from 'jsonwebtoken';
 import config from './server/configs/config';           //Config token
 import profiles from "./server/database/profiles";      //DB Connection
@@ -15,8 +16,6 @@ app.set('Secret', config.secret);
 //Configure app to use bodyparser
 app.use(body_parser.urlencoded({extended: true}));
 app.use(body_parser.json());
-
-
 
 
 //Register routes in app

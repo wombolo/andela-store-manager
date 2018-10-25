@@ -35,7 +35,7 @@ describe("Products", () =>{
 
         //Test to NOT get single product
         it('should not get a single product record', function (done) {
-            const id = 6;
+            const id = 600000;
             chai.request(app)
                 .get(`/api/v1/products/${id}`)
                 .end((err,res) =>{
