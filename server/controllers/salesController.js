@@ -1,4 +1,5 @@
-const sales = require('../database/sales');
+import sales from '../database/sales';
+import validation from './validationLibrary';
 
 class salesController{
     //Get all sales
@@ -12,6 +13,11 @@ class salesController{
 
     //Get a single sale
     static getSingleSale(req,res){
+
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please use a number as ID"})
+
+
         const findSale = sales.find(sale => sale.id === parseInt(req.params.id, 10));
 
         if (findSale){
@@ -22,17 +28,19 @@ class salesController{
         }
 
         return res.status(404).json({
-            message: "sale not found",
+            message: "sale record not found",
         })
     }
 
 
     //Update a single sale
     static updateSingleSale(req,res){
-        if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
+        let validateBody = validation.validateBodyParamsForUpdating(req.body);
+        if (validateBody){
             return res.status(400).json({
-                message: 'A required detail is missing: title, description, price or quantity. sale not created',
-            });
+                message: validateBody,
+                status: 'Validation error'
+            })
         }
 
         const id = parseInt(req.params.id,10);
@@ -74,38 +82,43 @@ class salesController{
 
     // Delete a single sale
     static deleteSingleSale(req,res){
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please use a number as ID"});
+
         const id = parseInt(req.params.id,10);
-        let deleted;
+        let remainingSales;
 
         sales.map((sale,index) => {
             if (sale.id === id){
                 sales.splice(index,1);
-                deleted = sale;
+                remainingSales = sale;
             }
         });
 
-        if (deleted){
+        if (remainingSales){
             return res.status(200).json({
-                sale: deleted,
+                sale: remainingSales,
                 message: 'sale deleted',
             });
         }
 
         return res.status(404).json({
-            message: "sale not found",
+            message: "Sale not found",
         })
     }
 
 
     //Create a single sale
     static addNewSale(req,res){
-        if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
+        let validateBody = validation.validateBodyParamsForCreating(req.body);
+        if (validateBody){
             return res.status(400).json({
-                message: 'A required detail is missing: title, description, price or quantity. sale not created',
-            });
+                message: validateBody,
+                status: 'Validation error'
+            })
         }
 
-        const new_product = {
+        const new_sale = {
             id: sales.length + 1,
             product_id: req.body.product_id,
             title: req.body.title,
@@ -114,13 +127,13 @@ class salesController{
             quantity: req.body.quantity
         };
 
-        sales.push(new_product);
+        sales.push(new_sale);
 
         return res.status(201).json({
-            new_product,
+            new_sale: new_sale,
             message: "sale created Successfully",
         })
     }
 }
 
-module.exports = salesController;
+export default salesController;

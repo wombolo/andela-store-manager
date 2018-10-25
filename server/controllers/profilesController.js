@@ -1,4 +1,5 @@
-const profiles = require('../database/profiles');
+import profiles from '../database/profiles';
+import validation from './validationLibrary';
 
 class profilesController{
     //Get all profiles
@@ -11,6 +12,10 @@ class profilesController{
 
     //Get a single profile
     static getSingleProfile(req,res){
+
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please specify a number in the parameters list"})
+
         const findProfile = profiles.find(profile => profile.id === parseInt(req.params.id, 10));
 
         if (findProfile){
@@ -28,12 +33,15 @@ class profilesController{
 
     //Update a single profile
     static updateSingleProfile(req,res){
-        if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please specify a number in the parameters list"})
+
+
+        if (!req.body.firstname || !req.body.lastname || !req.body.role){
             return res.status(400).json({
-                message: 'A required detail is missing: title, description, price or quantity. profile not created',
+                message: 'A required detail is missing: Try again. Profile not created',
             });
         }
-
         const id = parseInt(req.params.id,10);
 
         let profileFound, itemIndex;
@@ -73,19 +81,24 @@ class profilesController{
 
     // Delete a single profile
     static deleteSingleProfile(req,res){
+
+        if (!validation.validateNumber(req.params.id))
+            return res.status(400).json({message: "Please specify a number in the parameters list"})
+
+
         const id = parseInt(req.params.id,10);
-        let deleted;
+        let profilesRemaining;
 
         profiles.map((profile,index) => {
             if (profile.id === id){
                 profiles.splice(index,1);
-                deleted = profile;
+                profilesRemaining = profile;
             }
         });
 
-        if (deleted){
+        if (profilesRemaining){
             return res.status(200).json({
-                profile: deleted,
+                profile: profilesRemaining,
                 message: 'profile deleted',
             });
         }
@@ -98,28 +111,27 @@ class profilesController{
 
     //Create a single profile
     static addNewProfile(req,res){
-        if (!req.body.title || !req.body.description || !req.body.price || !req.body.quantity){
+        if (!req.body.firstname || !req.body.lastname || !req.body.role){
             return res.status(400).json({
-                message: 'A required detail is missing: title, description, price or quantity. profile not created',
+                message: 'A required detail is missing: Either names or role. Try again. Profile not created',
             });
         }
 
-        const new_product = {
+        const new_profile = {
             id: profiles.length + 1,
-            product_id: req.body.product_id,
-            title: req.body.title,
-            description: req.body.description,
-            price: req.body.price,
-            quantity: req.body.quantity
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            role: req.body.role,
+            image: req.body.image || 'images/default_profile.png'
         };
 
-        profiles.push(new_product);
+        profiles.push(new_profile);
 
         return res.status(201).json({
-            new_product,
+            new_profile: new_profile,
             message: "profile created Successfully",
         })
     }
 }
 
-module.exports = profilesController;
+export default profilesController;
