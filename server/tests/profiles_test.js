@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../server';
-import profiles from "../database/profiles";
+import profiles from "../database/db";
 
 //Configure chai
 chai.use(chaiHttp);
@@ -50,9 +50,10 @@ describe("Profiles", () =>{
     describe('PUT', function () {
         //Test to update single profile
         it('should update a single profile record', function (done) {
-            const id = 1;
-            chai.request(app)
-                .get(`/api/v1/profiles/${id}`)
+            const id = 2;
+          let profile = {id: 1, firstname: "Marilyn", lastname: "Cole",email: 'mary.cole@ini.net',  role: "admin", image: "images/pix1.png",password:'12345'};
+          chai.request(app)
+                .put(`/api/v1/profiles/${id}`).send(profile)
                 .end((err,res) =>{
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -77,7 +78,7 @@ describe("Profiles", () =>{
     describe('POST', function () {
         //Test to add a new profile
         it('should add a new profile records', function (done) {
-            let profile = {id: 1, firstname: "Marilyn", lastname: "Cole", role: "admin", image: "images/pix1.png"};
+            let profile = {id: 1, firstname: "Marilyn", lastname: "Cole",email: 'mary.cole@ini.net',  role: "admin", image: "images/pix1.png",password:'12345'};
 
             chai.request(app)
                 .post('/api/v1/profiles/')
@@ -89,6 +90,7 @@ describe("Profiles", () =>{
                     res.body.new_profile.should.have.property('id');
                     res.body.new_profile.should.have.property('firstname');
                     res.body.new_profile.should.have.property('lastname');
+                    res.body.new_profile.should.have.property('email');
                     res.body.new_profile.should.have.property('role');
                     res.body.new_profile.should.have.property('image');
                     done();
@@ -97,9 +99,10 @@ describe("Profiles", () =>{
 
         //Test to NOT add a new profile
         it('should NOT add a new profile records', function (done) {
-            // const id = profiles.length + 1;
-            chai.request(app)
-                .post('/api/v1/profiles/')
+          let profile = {id: 1, firstname: "Marilyn", lastname: "Cole", role: "admin", image: "images/pix1.png",password:'12345'};
+
+          chai.request(app)
+                .post('/api/v1/profiles/').send(profile)
                 .end((err,res) =>{
                     res.should.have.status(400);
                     res.body.should.be.a('object');
@@ -112,7 +115,7 @@ describe("Profiles", () =>{
     describe('DELETE', function () {
         //Test to delete single profile
         it('should delete a single profile record', function (done) {
-            const id = 1;
+            const id = 13;
             chai.request(app)
                 .delete(`/api/v1/profiles/${id}`)
                 .end((err,res) =>{

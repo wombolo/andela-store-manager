@@ -3,7 +3,7 @@ import ProductController from '../../controllers/productsController';
 
 const routes = Router();
 
-//Products Routes
+// Products Routes
 routes.get('/', ProductController.getAllProducts);
 routes.get('/:id', ProductController.getSingleProduct);
 routes.put('/:id', ProductController.updateSingleProduct);
