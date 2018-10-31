@@ -1,10 +1,10 @@
-import products from '../database/db';
-import validation from './validationLibrary';
+import dbConfig from '../database/db';
+import validation from './Helpers';
 
 class productsController {
   // Get all products
   static getAllProducts(req, resp, next) {
-    products.query('SELECT * FROM products', (err, res) => {
+    dbConfig.query('SELECT * FROM products where status = $1', ['active'], (err, res) => {
       if (err) { return next(err); }
 
       return resp.status(200).json({
@@ -18,7 +18,7 @@ class productsController {
   static getSingleProduct(req, resp, next) {
     if (!validation.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
-    products.query('SELECT * FROM products WHERE id = $1', [req.params.id], (err, res) => {
+    dbConfig.query('SELECT * FROM products WHERE id = $1 AND status = $2', [req.params.id, 'active'], (err, res) => {
       if (err) { return next(err); }
 
       // If any record is found... Else
@@ -28,9 +28,9 @@ class productsController {
           message: 'A single product record',
         });
       }
+
       return resp.status(404).json({ message: 'product not found' });
     });
-    // return resp.status(404).json({ message: 'product not found' });
   }
 
 
@@ -51,7 +51,7 @@ class productsController {
     let productFound;
 
 
-    products.query('SELECT * FROM products WHERE id = $1', [id], (err, res) => {
+    dbConfig.query('SELECT * FROM products WHERE id = $1 AND status = $2', [id, 'active'], (err, res) => {
       if (err) { return next(err); }
 
       productFound = res.rows[0];
@@ -70,9 +70,8 @@ class productsController {
           title, image, description, price, quantity,
         } = updatedProduct;
 
-
         // Update product
-        products.query('UPDATE products SET (title, image, description, price, quantity) = ($1,$2,$3,$4,$5) WHERE id = $6 RETURNING *',
+        dbConfig.query('UPDATE products SET (title, image, description, price, quantity) = ($1,$2,$3,$4,$5) WHERE id = $6 RETURNING *',
           [title, image, description, price, quantity, req.params.id], (errr, ress) => {
             if (errr) {
               return next(errr);
@@ -89,19 +88,17 @@ class productsController {
   }
 
 
-  // Delete a single product.
-  // *************************CONFIRMATION REQUIRED**************************
   static deleteSingleProduct(req, resp, next) {
     if (!validation.isNumber(req.params.id)) return resp.status(400).json({ message: 'Please specify a number in the parameters list' });
 
     const id = parseInt(req.params.id, 10);
 
-    products.query('DELETE FROM products WHERE id = $1 RETURNING *', [id], (err, res) => {
+    dbConfig.query('UPDATE products SET status = $1 WHERE id = $2 RETURNING *', ['deleted', id], (err, res) => {
       if (err) { return next(err); }
 
       // If any record is found... Else
       if (res && res.rows.length > 0) {
-        return resp.status(201).json({
+        return resp.status(200).json({
           product: res.rows[0],
           message: 'A single product deleted',
         });
@@ -136,7 +133,7 @@ class productsController {
 
 
     // Create product
-    products.query('INSERT INTO products (title, description, price, quantity, image) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+    dbConfig.query('INSERT INTO products (title, description, price, quantity, image) VALUES ($1,$2,$3,$4,$5) RETURNING *',
       [title, description, price, quantity, image], (err, res) => {
         if (err) { return next(err); }
 

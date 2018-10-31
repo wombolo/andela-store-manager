@@ -1,27 +1,25 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import validator from 'express-validator';
+import dotenv from 'dotenv';
 import routes from './server/routes/v1/index';
-import authRoute from './server/routes/v1/auth_route';
+import authRoute from './server/middleware/auth_route';
 import loginRoute from './server/routes/v1/login_route';
 
+dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-app.set('Secret', process.env.JWT_SECRET);
-
 // Configure app to use bodyparser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(validator());
 
+app.use('/api/v1/auth/', loginRoute);
 
-app.use('/auth/', loginRoute);
-
-// Authenticate routes first app
-app.use('/api/v1/', authRoute);
-
-// Then authorized links can follow
-app.use('/api/v1/', routes);
+// Authenticate routes first. i.e only logged in user can proceed
+app.use('/api/v1/', authRoute.verifyToken, routes);
 
 // index route
 app.all('/', (req, res) => { // Manage index route

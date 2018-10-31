@@ -1,11 +1,11 @@
 import Router from 'express';
-import { check } from 'express-validator/check';
 import LoginController from '../../controllers/loginController';
+import authRoute from '../../middleware/auth_route';
 
 const routes = Router();
 
-routes.post('/login', [check('email').isEmail()], LoginController.login);
-// Password must be 5 digits long
-routes.post('/signup', [check('email').isEmail(), check(['firstname', 'lastname', 'role']).isLength({ min: 1 }), check(['password']).isLength({ min: 5 })], LoginController.signup);
+routes.post('/login', LoginController.login);
+routes.post('/signup', LoginController.signup);
+// routes.post('/signup', authRoute.verifyTokenAdmin, LoginController.signup);
 
 export default routes;

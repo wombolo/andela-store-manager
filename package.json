@@ -5,11 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node --require dotenv/config --require babel-register ./server.js",
+    "db_migrate": "babel-node ./server/database/db_migrate.js",
+    "db_seed": "babel-node ./server/database/db_seed.js",
     "build": "babel controllers/*.js -d dist",
     "test": "mocha --require babel-register server/tests/*.js --exit",
     "testnyc": "nyc mocha tests/*.js --timeout=3000",
-    "dev": "nodemon ./server.js --exec \"node --require dotenv/config --require babel-register\"",
-    "coveralls": "nyc --require babel-register --require dotenv/config --reporter=lcov  node_modules/.bin/mocha server/tests/*.js"
+    "dev": "nodemon ./server.js --exec \"node --require babel-register\"",
+    "coveralls": "nyc --require babel-register --reporter=lcov  npm test"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
   "homepage": "https://github.com/wombolo/andela-store-manager#readme",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",

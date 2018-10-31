@@ -1,20 +1,17 @@
 import Router from 'express';
 import ProfileController from '../../controllers/profilesController';
+import authRoute from '../../middleware/auth_route';
 
 const routes = Router();
 
-routes.use('/', ((req, res, next) => {
-  if (req.auth_token.profile.role === 'admin') {
-    next();
-  } else {
-    res.status(403).json({ message: 'Unauthorised access into this endpoint' });
-  }
-}));
 // Profiles Routes
-routes.get('/', ProfileController.getAllProfiles);
+routes.get('/', authRoute.verifyTokenAdmin, ProfileController.getAllProfiles);
+
+// Store attendant can do these ffg:
 routes.get('/:id', ProfileController.getSingleProfile);
 routes.put('/:id', ProfileController.updateSingleProfile);
-routes.delete('/:id', ProfileController.deleteSingleProfile);
-routes.post('/', ProfileController.addNewProfile);
+
+routes.delete('/:id', authRoute.verifyTokenAdmin, ProfileController.deleteSingleProfile);
+routes.post('/', authRoute.verifyTokenAdmin, ProfileController.addNewProfile);
 
 export default routes;

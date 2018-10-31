@@ -1,10 +1,10 @@
-import profiles from '../database/db';
-import validation from './validationLibrary';
+import dbConfig from '../database/db';
+import helpers from './Helpers';
 
 class profilesController {
   // Get all profiles
   static getAllProfiles(req, resp, next) {
-    profiles.query('SELECT * FROM profiles', (err, res) => {
+    dbConfig.query('SELECT id, firstname, lastname, email, role, image FROM profiles', (err, res) => {
       if (err) { return next(err); }
 
       return resp.status(200).json({
@@ -16,9 +16,18 @@ class profilesController {
 
   // Get a single profile
   static getSingleProfile(req, resp, next) {
-    if (!validation.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
+    if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
-    profiles.query('SELECT * FROM profiles WHERE id = $1', [req.params.id], (err, res) => {
+    let requestId;
+    // If requester is admin:
+    if (req.auth_token.profile.role === 'admin') {
+      requestId = req.params.id;
+    } else {
+      // Store attendant can only view his profile
+      requestId = req.auth_token.profile.id;
+    }
+
+    dbConfig.query('SELECT id, firstname, lastname, email, role, image FROM profiles WHERE id = $1', [requestId], (err, res) => {
       if (err) { return next(err); }
 
       // If any record is found... Else
@@ -28,32 +37,39 @@ class profilesController {
           message: 'A single profile record',
         });
       }
+      return resp.status(404).json({ message: 'profile not found' });
     });
-    // return resp.status(404).json({ message: 'profile not found' });
   }
 
 
   // Update a single profile
   static updateSingleProfile(req, resp, next) {
-    if (!validation.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
+    if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
-    if (!req.body.firstname || !req.body.lastname || !req.body.email|| !req.body.password) {
+    if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password) {
       return resp.status(400).json({ message: 'Missing information: Names, Email or Password. Try again. Profile not updated' });
     }
 
-    const id = parseInt(req.params.id, 10);
-    let profileFound; let itemIndex;
+    let requestId;
+    // If requester is admin:
+    if (req.auth_token.profile.role === 'admin') {
+      requestId = req.params.id;
+    } else {
+      // Store attendant can only edit his profile
+      requestId = req.auth_token.profile.id;
+    }
+
+    let profileFound;
 
 
-    profiles.query('SELECT * FROM profiles WHERE id = $1', [id], (err, res) => {
+    dbConfig.query('SELECT * FROM profiles WHERE id = $1', [requestId], (err, res) => {
       if (err) { return next(err); }
 
       profileFound = res.rows[0];
-      itemIndex = res.rows[0].id;
 
 
       if (!profileFound) {
-        return resp.status(404).send({ message: err + '. profile not found' });
+        return resp.status(404).send({ message: 'profile not found', error: err });
       }
 
       const updatedProfile = {
@@ -71,10 +87,10 @@ class profilesController {
         firstname, lastname, email, role, image, password,
       } = updatedProfile;
 
-
+      const hashPassword = helpers.hashPassword(password);
       // Update profile
-      profiles.query('UPDATE profiles SET (firstname, lastname, email, role,image,password) = ($1,$2,$3,$4,$5,$6) WHERE id = $7 RETURNING *',
-        [firstname, lastname, email, role, image, password, req.params.id], (errr, ress) => {
+      dbConfig.query('UPDATE profiles SET (firstname, lastname, email, role,image,password) = ($1,$2,$3,$4,$5,$6) WHERE id = $7 RETURNING *',
+        [firstname, lastname, email, role, image, hashPassword, requestId], (errr, ress) => {
           if (errr) { return next(errr); }
 
           if (ress && ress.rows.length > 0) {
@@ -85,22 +101,19 @@ class profilesController {
           }
 
           return resp.status(400).json({
-            message: errr + '. profile not updated',
+            message: `${errr}. profile not updated`,
           });
-
         });
     });
   }
 
 
-  // Delete a single profile.
-  // *************************CONFIRMATION REQUIRED**************************
   static deleteSingleProfile(req, resp, next) {
-    if (!validation.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
+    if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
     const id = parseInt(req.params.id, 10);
 
-    profiles.query('DELETE FROM profiles WHERE id = $1 RETURNING id, firstname, lastname,email, role,image', [id], (err, res) => {
+    dbConfig.query('DELETE FROM profiles WHERE id = $1 RETURNING id, firstname, lastname,email, role,image', [id], (err, res) => {
       if (err) next(err);
 
       // If any record is found... Else
@@ -111,9 +124,8 @@ class profilesController {
         });
       }
       return resp.status(404).json({
-        message: err + '. profile not found',
+        message: `${err}. profile not found`,
       });
-
     });
   }
 
@@ -126,8 +138,7 @@ class profilesController {
       });
     }
 
-    const new_profile = {
-      id: profiles.length + 1,
+    const newProfile = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
@@ -138,25 +149,26 @@ class profilesController {
 
     const {
       firstname, lastname, email, role, image, password,
-    } = new_profile;
+    } = newProfile;
+
+    const hashPassword = helpers.hashPassword(password);
 
 
     // Create profile
-    profiles.query('INSERT INTO profiles (firstname, lastname,email, role,image,password) VALUES ($1,$2,$3,$4,$5, $6) RETURNING id, firstname, lastname,email, role,image',
-      [firstname, lastname, email, role, image, password], (err, res) => {
+    dbConfig.query('INSERT INTO profiles (firstname, lastname,email, role,image,password) VALUES ($1,$2,$3,$4,$5, $6) RETURNING id, firstname, lastname,email, role,image',
+      [firstname, lastname, email, role, image, hashPassword], (err, res) => {
         if (err) { next(err); }
 
         if (res && res.rows.length > 0) {
           return resp.status(201).json({
-            profile: res.rows[0],
+            newProfile: res.rows[0],
             message: 'profile created Successfully',
           });
         }
 
         return resp.status(400).json({
-          message: err + '. profile not created',
+          message: `${err}. profile not created`,
         });
-
       });
   }
 }
