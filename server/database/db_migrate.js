@@ -18,7 +18,7 @@ const Migration = {
         role text default 'store_attendant'::text,
         image text,
         password text not null
-      );--create unique index if not exists profiles_email_uindex on profiles (email);
+      ); create unique index profiles_email_uindex on profiles (email);
      `);
 
 
@@ -33,7 +33,7 @@ const Migration = {
         cdate timestamp default now() not null
       );
    `);
-      // await process.exit(0);
+      await process.exit(0);
     } catch (e) {
       console.log('Caught: ', e.message);
     }
