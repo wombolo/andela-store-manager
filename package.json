@@ -10,7 +10,7 @@
     "testr": "mocha --require babel-register server/tests/*.js --exit",
     "build": "babel server -d dist",
     "dev": "nodemon ./server.js --exec \"node --require babel-register\"",
-    "coveralls": "nyc npm testr && nyc report --reporter=text-lcov | coveralls "
+    "coveralls": "nyc npm run testr && nyc report --reporter=text-lcov | coveralls "
   },
   "repository": {
     "type": "git",
