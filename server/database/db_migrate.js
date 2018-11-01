@@ -10,8 +10,7 @@ const Migration = {
     `);
 
       console.log('Creating table profiles');
-      await pool.query(`
-      create table if not exists profiles (
+      await pool.query(`create table if not exists profiles (
         id serial not null constraint profile_pkey primary key,
         firstname text,
         lastname text,
