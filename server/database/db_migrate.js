@@ -9,17 +9,17 @@ const Migration = {
       await pool.query(`create table if not exists products (id serial not null constraint products_pkey primary key,title text not null,image text,description text,price numeric(11,2) not null,quantity integer,status text default 'active'::text,cdate timestamp default now() not null);
     `);
 
-      console.log('Creating table profiles');
-      await pool.query(`create table if not exists profiles (
-        id serial not null constraint profile_pkey primary key,
-        firstname text,
-        lastname text,
-        email text not null,
-        role text default 'store_attendant'::text,
-        image text,
-        password text not null
-      );create unique index if not exists profile_email_uindex on profiles (email);
-     `);
+      //  console.log('Creating table profiles');
+      //  await pool.query(`create table if not exists profiles (
+      //    id serial not null constraint profile_pkey primary key,
+      //    firstname text,
+      //    lastname text,
+      //    email text not null,
+      //    role text default 'store_attendant'::text,
+      //    image text,
+      //    password text not null
+      //  );create unique index if not exists profile_email_uindex on profiles (email);
+      // `);
 
 
       console.log('Creating table sales');
