@@ -7,7 +7,7 @@ cache:
 services:
   - postgresql
 before_script:
-  -psql -c 'create database "andela-store-manager";' -U postgres
+  - psql -c 'create database "andela-store-manager";' -U postgres
   - npm run db_migrate
   - npm run db_seed
 after_success:
