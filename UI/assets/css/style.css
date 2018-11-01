@@ -41,6 +41,10 @@ input[type=submit] { cursor: pointer }
 .btn-danger:hover{border: 1px solid #bc1821; color: #f5f4e9; background-color: #bc1821;}
 .btn-success{border: 1px solid #61ff51; color: #131313; background-color: #61ff51;}
 .btn-success:hover{border: 1px solid #46b93b; color: #131313; background-color: #46b93b;}
+.text-success{color: #46b93b;}
+.text-danger{color: #bc1821;}
+.text-primary{color: #2FA2F5;}
+.text-gold{color: goldenrod;}
 
 a{text-decoration: none;color: #4745f5;}
 a:hover{color: #2FA2F5;}
@@ -70,6 +74,9 @@ thead td{background: #4745f5;color: #ffffff;padding: 1em; }
 tfoot td{background: #4745f5;color: #ffffff;padding: 2em; }
 .product-single-table .item-price{border: none}
 .text-center{text-align: center}
+.dashboard figure img{max-width: 200px;height: 200px;margin: 0 auto;display: block;}
+.dashboard .col-3{text-align: center}
+figure{margin: 10px 0;}
 @media screen and (max-width: 991px){  .container{width: 750px;}  }
 @media screen and (max-width: 768px){  .container{width: 550px;}  }
 @media screen and (max-width: 480px){  .container{width: 100%;}  }

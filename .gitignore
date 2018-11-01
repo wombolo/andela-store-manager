@@ -1,6 +1,6 @@
 .idea/
 node_modules/
+coverage
 .coveralls.yml
-coverage/
-.nyc_output/
 .env
+.nyc_output/
