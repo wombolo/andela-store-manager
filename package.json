@@ -8,7 +8,6 @@
     "db_migrate": "babel-node ./server/database/db_migrate.js",
     "db_seed": "babel-node ./server/database/db_seed.js",
     "build": "babel server -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./server.js --exec \"node --require babel-register\"",
     "coveralls": "nyc --require babel-register --reporter=text node_modules/.bin/mocha server/tests/*.js --exit"
   },
