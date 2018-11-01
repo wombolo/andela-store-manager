@@ -36,7 +36,7 @@ const Seed = {
       INSERT INTO sales (product_id, profile_id, title, description, price, quantity, cdate) VALUES (2, 3, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:08:07.585420');
       INSERT INTO sales (product_id, profile_id, title, description, price, quantity, cdate) VALUES (2, 3, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:08:38.010604');
     `);
-      await process.exit(0);
+      // await process.exit(0);
     } catch (e) {
       console.log('Caught: ', e.message);
     }

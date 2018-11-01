@@ -10,17 +10,17 @@ const Migration = {
     `);
 
       console.log('Creating table profiles');
-      await pool.query(`create table profiles (
-         id serial not null constraint profiles_pkey primary key,
-         firstname text,
-         lastname text,
-         email text not null,
-         role text default 'store_attendant'::text,
-         image text,
-         password text not null
-       ); 
-      `);
-      // --       // create unique index if not exists profile_email_uindex on profiles (email);
+      await pool.query(`
+      create table if not exists profiles (
+        id serial not null constraint profiles_pkey primary key,
+        firstname text,
+        lastname text,
+        email text not null,
+        role text default 'store_attendant'::text,
+        image text,
+        password text not null
+      );create unique index if not exists profiles_email_uindex on profiles (email);
+     `);
 
 
       console.log('Creating table sales');
@@ -35,7 +35,7 @@ const Migration = {
         cdate timestamp default now() not null
       );
    `);
-      await process.exit(0);
+      // await process.exit(0);
     } catch (e) {
       console.log('Caught: ', e.message);
     }
