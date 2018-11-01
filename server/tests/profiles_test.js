@@ -23,9 +23,8 @@ before((done) => {
     });
 });
 
-
-const deleteId = 10;
-const getId = 3;
+const deleteId = 3;
+const getId = 1;
 
 describe("Profiles", () =>{
   describe('GET', function () {
