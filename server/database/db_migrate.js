@@ -11,7 +11,7 @@ const Migration = {
 
       console.log('Creating table profiles');
       await pool.query(`create table profiles (
-         id serial not null constraint profile_pkey primary key,
+         id serial not null constraint profiles_pkey primary key,
          firstname text,
          lastname text,
          email text not null,
