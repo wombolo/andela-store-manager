@@ -34,6 +34,7 @@ const Migration = {
         cdate timestamp default now() not null
       );
    `);
+    await process.exit(0);
   },
 };
 
