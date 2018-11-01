@@ -19,11 +19,9 @@ class profilesController {
     if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
     let requestId;
-    // If requester is admin:
     if (req.auth_token.profile.role === 'admin') {
       requestId = req.params.id;
     } else {
-      // Store attendant can only view his profile
       requestId = req.auth_token.profile.id;
     }
 
@@ -51,11 +49,9 @@ class profilesController {
     }
 
     let requestId;
-    // If requester is admin:
     if (req.auth_token.profile.role === 'admin') {
       requestId = req.params.id;
     } else {
-      // Store attendant can only edit his profile
       requestId = req.auth_token.profile.id;
     }
 

@@ -37,10 +37,7 @@ class helpers {
       errors.push('Quantity is missing. Product not created');
     } else if (!helpers.isNumber(requestBody.quantity)) { errors.push('Price is not a number.'); }
 
-
-    if (errors.length >= 4) // If all is empty
-    { return errors; }
-
+    if (errors.length >= 4) { return errors; }
     return false;
   }
 
@@ -62,10 +59,7 @@ class helpers {
       errors.push('Quantity is missing. Product not created');
     } else if (!helpers.isNumber(requestBody.quantity)) { errors.push('Price is not a number.'); }
 
-
-    if (errors.length > 0) // If 1 parameter is empty
-    { return errors; }
-
+    if (errors.length > 0) { return errors; }
     return false;
   }
 }
