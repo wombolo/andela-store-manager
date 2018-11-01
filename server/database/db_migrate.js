@@ -3,13 +3,14 @@ import pool from './db';
 
 const Migration = {
   async migrate() {
+    try {
     /* eslint-disable no-console */
-    console.log('Creating table products');
-    await pool.query(`create table if not exists products (id serial not null constraint products_pkey primary key,title text not null,image text,description text,price numeric(11,2) not null,quantity integer,status text default 'active'::text,cdate timestamp default now() not null);
+      console.log('Creating table products');
+      await pool.query(`create table if not exists products (id serial not null constraint products_pkey primary key,title text not null,image text,description text,price numeric(11,2) not null,quantity integer,status text default 'active'::text,cdate timestamp default now() not null);
     `);
 
-    console.log('Creating table profiles');
-    await pool.query(`
+      console.log('Creating table profiles');
+      await pool.query(`
       create table if not exists profiles (
         id serial not null constraint profile_pkey primary key,
         firstname text,
@@ -22,8 +23,8 @@ const Migration = {
      `);
 
 
-    console.log('Creating table sales');
-    await pool.query(`
+      console.log('Creating table sales');
+      await pool.query(`
       create table if not exists sales(
         id serial not null constraint sales_pkey primary key,
         product_id integer constraint sales_products_id_fk references products on update cascade on delete cascade,
@@ -34,7 +35,10 @@ const Migration = {
         cdate timestamp default now() not null
       );
    `);
-    await process.exit(0);
+      await process.exit(0);
+    } catch (e) {
+      console.log('Caught: ', e.message);
+    }
   },
 };
 
