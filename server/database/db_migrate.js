@@ -6,12 +6,11 @@ const Migration = {
     try {
     /* eslint-disable no-console */
       console.log('Creating table products');
-      await pool.query(`create table if not exists products (id serial not null constraint products_pkey primary key,title text not null,image text,description text,price numeric(11,2) not null,quantity integer,status text default 'active'::text,cdate timestamp default now() not null);
+      await pool.query(`drop table if exists products; create table if not exists products (id serial not null constraint products_pkey primary key,title text not null,image text,description text,price numeric(11,2) not null,quantity integer,status text default 'active'::text,cdate timestamp default now() not null);
     `);
 
       console.log('Creating table profiles');
-      await pool.query(`
-      create table if not exists profiles (
+      await pool.query(`drop table if exists profiles; create table profiles(
         id serial not null constraint profiles_pkey primary key,
         firstname text,
         lastname text,
@@ -24,8 +23,7 @@ const Migration = {
 
 
       console.log('Creating table sales');
-      await pool.query(`
-      create table if not exists sales(
+      await pool.query(`drop table if exists sales; create table sales(
         id serial not null constraint sales_pkey primary key,
         product_id integer constraint sales_products_id_fk references products on update cascade on delete cascade,
         profile_id integer constraint sales_profiles_id_fk references profiles on update cascade on delete cascade,
