@@ -18,8 +18,9 @@ const Migration = {
          role text default 'store_attendant'::text,
          image text,
          password text not null
-       );create unique index if not exists profile_email_uindex on profiles (email);
+       ); 
       `);
+      // --       // create unique index if not exists profile_email_uindex on profiles (email);
 
 
       console.log('Creating table sales');
