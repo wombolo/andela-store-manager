@@ -7,7 +7,7 @@
     "start": "babel-node --require dotenv/config --require babel-register ./server.js",
     "db_migrate": "babel-node ./server/database/db_migrate.js",
     "db_seed": "babel-node ./server/database/db_seed.js",
-    "build": "babel controllers/*.js -d dist",
+    "build": "babel server -d dist",
     "test": "mocha --require babel-register server/tests/*.js --exit",
     "testnyc": "nyc mocha tests/*.js --timeout=3000",
     "dev": "nodemon ./server.js --exec \"node --require babel-register\"",

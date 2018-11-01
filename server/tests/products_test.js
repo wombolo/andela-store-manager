@@ -24,7 +24,7 @@ before((done) => {
 });
 
 
-const deleteId = 6;
+const deleteId = 4;
 const getId = 3;
 
 describe("Products", () =>{

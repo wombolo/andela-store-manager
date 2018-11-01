@@ -70,7 +70,7 @@ describe("Sales", () =>{
   describe('POST', function () {
     //Test to add a new sale
     it('should add a new sale records', function (done) {
-      let book =  {id: 4, product_id: 2, title: "Things fall apart", description: "Book written by Chinua Achebe", price: 42, quantity: 3};
+      let book =  {id: 4, product_id: 2, title: "Epa Wei-cheng", description: "Stromae Anichebe", price: 42, quantity: 3};
 
       chai.request(app)
         .post('/api/v1/sales/')
