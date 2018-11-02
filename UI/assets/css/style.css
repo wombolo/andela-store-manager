@@ -80,4 +80,7 @@ tfoot td{background: #4745f5;color: #ffffff;padding: 2em; }
 figure{margin: 10px 0;}
 @media screen and (max-width: 991px){  .container{width: 750px;}  }
 @media screen and (max-width: 768px){  .container{width: 550px;}  }
-@media screen and (max-width: 480px){  .container{width: 100%;}  }
+@media screen and (max-width: 480px){
+    .container{width: 100%;}
+    .col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9,.col-10{width: 100%;}
+}
