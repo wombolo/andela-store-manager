@@ -66,6 +66,7 @@ footer .info{padding: 5em 10em;border-top: 2px solid goldenrod;}
 footer a{color: #ffffff}
 footer a:hover{color: goldenrod}
 .foot-bottom{background: #161616;padding: 2em 5em}
+.overflow{overflow-x: auto;}
 table{border-collapse: collapse;width: 100%;}
 .dataTable img{width: 100px}
 thead td{background: #4745f5;color: #ffffff;padding: 1em; }
