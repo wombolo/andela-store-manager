@@ -7,6 +7,7 @@ const { JWT_SECRET } = process.env;
 class authController {
   static login(req, resp, next) {
     req.checkBody('email').isEmail();
+    req.checkBody(['password']).isLength({ min: 1 });
     const errors = req.validationErrors();
     if (errors) {
       return resp.status(422).json({ errors });
