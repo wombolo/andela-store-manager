@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import validator from 'express-validator';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import routes from './server/routes/v1/index';
 import authRoute from './server/middleware/auth_route';
 import loginRoute from './server/routes/v1/login_route';
@@ -15,6 +16,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(validator());
+
+app.use(cors());
 
 app.use('/api/v1/auth/', loginRoute);
 

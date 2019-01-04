@@ -20,7 +20,7 @@ class authController {
 
       if (res.rows.length > 0) {
         if (!helpers.comparePassword(res.rows[0].password, password)) {
-          return res.status(400).json({ message: 'Password: authentication failed. Try later' });
+          return resp.status(400).json({ message: 'Password: authentication failed. Try later' });
         }
         // Don't payload user password
         res.rows[0].password = null;
@@ -31,7 +31,7 @@ class authController {
 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
 
-        resp.status(201).json({ message: 'authentication done', token });
+        resp.status(200).json({ message: 'authentication done', token });
       } else {
         resp.status(403).json({ message: 'Email: authentication failed. Try later' });
       }

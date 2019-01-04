@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+// import formidable from 'formidable';
+import fs from 'fs';
 
 class helpers {
   static hashPassword(password) {
@@ -61,6 +63,34 @@ class helpers {
 
     if (errors.length > 0) { return errors; }
     return false;
+  }
+
+  static uploadImageInForms(requestBodyImage, folderName = 'products') {
+    // const form = new formidable.IncomingForm();
+
+    // form.parse(requestBodyImage, (err, fields, files) => {
+    // console.log('1st');
+    const fileSize = requestBodyImage.size;
+    console.log('requestBodyImage: ', requestBodyImage);
+    const fileType = requestBodyImage.type.toLowerCase();
+
+    // If file is too large or file type is unsupported
+    if (fileSize < 250000 || fileType === 'image/png' || fileType === 'image/jpg') {
+      const oldpath = requestBodyImage.path;
+      const newpath = `${__dirname}../../../frontend/assets/img/${folderName}/${requestBodyImage.name}`;
+
+      console.log('newpath: ', newpath);
+
+      fs.rename(oldpath, newpath, (errr) => {
+        if (errr) return null;
+        return newpath;
+      });
+    } else {
+      console.log('hereIns');
+      return { error: 'file is too large or file is unsupported' };
+    }
+
+    // });
   }
 }
 

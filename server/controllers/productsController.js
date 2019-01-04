@@ -1,5 +1,5 @@
 import dbConfig from '../database/db';
-import validation from './Helpers';
+import helpers from './Helpers';
 
 class productsController {
   // Get all products
@@ -16,7 +16,7 @@ class productsController {
 
   // Get a single product
   static getSingleProduct(req, resp, next) {
-    if (!validation.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
+    if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
     dbConfig.query('SELECT * FROM products WHERE id = $1 AND status = $2', [req.params.id, 'active'], (err, res) => {
       if (err) { return next(err); }
@@ -36,9 +36,9 @@ class productsController {
 
   // Update a single product
   static updateSingleProduct(req, resp, next) {
-    if (!validation.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
+    if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
-    const validateBody = validation.validateBodyParamsForUpdating(req.body);
+    const validateBody = helpers.validateBodyParamsForUpdating(req.body);
     if (validateBody) {
       return resp.status(400).json({
         message: validateBody,
@@ -89,7 +89,7 @@ class productsController {
 
 
   static deleteSingleProduct(req, resp, next) {
-    if (!validation.isNumber(req.params.id)) return resp.status(400).json({ message: 'Please specify a number in the parameters list' });
+    if (!helpers.isNumber(req.params.id)) return resp.status(400).json({ message: 'Please specify a number in the parameters list' });
 
     const id = parseInt(req.params.id, 10);
 
@@ -110,7 +110,9 @@ class productsController {
 
   // Create a single product
   static addNewProduct(req, resp, next) {
-    const validateBody = validation.validateBodyParamsForCreating(req.body);
+    console.log('req.body.image: ', req.body);
+
+    const validateBody = helpers.validateBodyParamsForCreating(req.body);
     if (validateBody) {
       return resp.status(400).json({
         message: validateBody,
@@ -118,13 +120,26 @@ class productsController {
       });
     }
 
-    const newProduct = {
-      title: req.body.title,
-      image: req.body.image || 'default_pix.png',
-      description: req.body.description,
-      price: req.body.price,
-      quantity: req.body.quantity,
-    };
+    if (req.body.image) {
+
+
+      const imageUrl = helpers.uploadImageInForms(req.body.image);
+      // console.log('imageUrl: ', imageUrl);
+      if (imageUrl.error) {
+        return resp.status(400).json({
+          message: imageUrl.error,
+          status: 'Validation error',
+        });
+      }
+    }
+
+    // const newProduct = {
+    //   title: req.body.title,
+    //   image: imageUrl || 'default_pix.png',
+    //   description: req.body.description,
+    //   price: req.body.price,
+    //   quantity: req.body.quantity,
+    // };
 
 
     const {

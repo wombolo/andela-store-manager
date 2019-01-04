@@ -7,7 +7,7 @@ const Migration = {
     /* eslint-disable no-console */
       console.log('Creating table products');
       await pool.query(`drop table if exists products; create table if not exists products (id serial not null constraint products_pkey primary key,title text not null,image text,description text,price numeric(11,2) not null,quantity integer,status text default 'active'::text,cdate timestamp default now() not null);
-    `);
+`);
 
       console.log('Creating table profiles');
       await pool.query(`drop table if exists profiles; create table profiles(
