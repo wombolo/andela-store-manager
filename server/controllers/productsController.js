@@ -110,8 +110,6 @@ class productsController {
 
   // Create a single product
   static addNewProduct(req, resp, next) {
-    console.log('req.body.image: ', req.body);
-
     const validateBody = helpers.validateBodyParamsForCreating(req.body);
     if (validateBody) {
       return resp.status(400).json({
@@ -120,26 +118,24 @@ class productsController {
       });
     }
 
-    if (req.body.image) {
+    // if (req.body.image) {
+    //   imageUrl = helpers.uploadImageInForms(req.body.image);
+    //   // console.log('imageUrl: ', imageUrl);
+    //   if (imageUrl.error) {
+    //     return resp.status(400).json({
+    //       message: imageUrl.error,
+    //       status: 'Validation error',
+    //     });
+    //   }
+    // }
 
-
-      const imageUrl = helpers.uploadImageInForms(req.body.image);
-      // console.log('imageUrl: ', imageUrl);
-      if (imageUrl.error) {
-        return resp.status(400).json({
-          message: imageUrl.error,
-          status: 'Validation error',
-        });
-      }
-    }
-
-    // const newProduct = {
-    //   title: req.body.title,
-    //   image: imageUrl || 'default_pix.png',
-    //   description: req.body.description,
-    //   price: req.body.price,
-    //   quantity: req.body.quantity,
-    // };
+    const newProduct = {
+      title: req.body.title,
+      image: req.body.image,
+      description: req.body.description,
+      price: req.body.price,
+      quantity: req.body.quantity,
+    };
 
 
     const {
