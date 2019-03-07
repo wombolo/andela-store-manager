@@ -44,9 +44,11 @@ class profilesController {
   static updateSingleProfile(req, resp, next) {
     if (!helpers.isNumber(req.params.id)) { return resp.status(400).json({ message: 'Please specify a number in the parameters list' }); }
 
-    if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password) {
-      return resp.status(400).json({ message: 'Missing information: Names, Email or Password. Try again. Profile not updated' });
-    }
+    // if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password) {
+    //   return resp.status(400).json({
+    //   message: 'Missing information: Names, Email or Password. Try again. Profile not updated'
+    //   });
+    // }
 
     let requestId;
     if (req.auth_token.profile.role === 'admin') {
@@ -56,7 +58,6 @@ class profilesController {
     }
 
     let profileFound;
-
 
     dbConfig.query('SELECT * FROM profiles WHERE id = $1', [requestId], (err, res) => {
       if (err) { return next(err); }
@@ -78,12 +79,16 @@ class profilesController {
         password: req.body.password || profileFound.password,
       };
 
-
       const {
         firstname, lastname, email, role, image, password,
       } = updatedProfile;
 
-      const hashPassword = helpers.hashPassword(password);
+      let hashPassword = profileFound.password;
+
+      if (req.body.password) {
+        hashPassword = helpers.hashPassword(password);
+      }
+
       // Update profile
       dbConfig.query('UPDATE profiles SET (firstname, lastname, email, role,image,password) = ($1,$2,$3,$4,$5,$6) WHERE id = $7 RETURNING *',
         [firstname, lastname, email, role, image, hashPassword, requestId], (errr, ress) => {
@@ -130,7 +135,7 @@ class profilesController {
   static addNewProfile(req, resp, next) {
     if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password) {
       return resp.status(400).json({
-        message: 'A required detail is missing: Either names or role. Try again. Profile not created',
+        message: 'A required detail is missing: Either names or password. Try again. Profile not created',
       });
     }
 
@@ -139,8 +144,8 @@ class profilesController {
       lastname: req.body.lastname,
       email: req.body.email,
       role: req.body.role || 'store_attendant',
-      image: req.body.image || 'images/default_profile.png',
-      password: '12345',
+      image: req.body.image || 'team-7.jpg',
+      password: req.body.password || '12345',
     };
 
     const {

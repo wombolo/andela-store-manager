@@ -4,7 +4,20 @@ import validation from './Helpers';
 class salesController {
   // Get all sales
   static getAllSales(req, resp, next) {
-    dbConfig.query('SELECT * FROM sales', (err, res) => {
+
+    let queryOneSale;
+    let paramsOneSale;
+
+    // If requester is admin:
+    if (req.auth_token.profile.role === 'admin') {
+      queryOneSale = 'SELECT * FROM sales';
+    } else {
+      // Store attendant can only view sale made by him
+      queryOneSale = 'SELECT * FROM sales WHERE profile_id = $1';
+      paramsOneSale = [req.auth_token.profile.id];
+    }
+
+    dbConfig.query(queryOneSale, paramsOneSale, (err, res) => {
       if (err) { return next(err); }
 
       return resp.status(200).json({
