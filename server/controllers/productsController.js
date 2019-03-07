@@ -89,7 +89,7 @@ class productsController {
 
 
   static deleteSingleProduct(req, resp, next) {
-    if (!helpers.isNumber(req.params.id)) return resp.status(400).json({ message: 'Please specify a number in the parameters list' });
+    if (!helpers.isNumber(parseInt(req.params.id, 10))) return resp.status(400).json({ message: 'Please specify a number in the parameters list' });
 
     const id = parseInt(req.params.id, 10);
 
