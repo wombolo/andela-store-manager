@@ -3,10 +3,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+let databaseName = process.env.DB_NAME;
+if (process.env.NODE_ENV === 'testing') {
+  databaseName = process.env.DB_NAME_TESTING;
+}
+
 const pool = new pg.Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  database: process.env.DB_NAME,
+  database: databaseName,
   password: process.env.DB_PASS || '',
   port: process.env.DB_PORT,
   max: process.env.DB_MAX, // max number of connection can be open to database

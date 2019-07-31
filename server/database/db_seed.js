@@ -17,10 +17,10 @@ const Seed = {
 
       console.log('Dumping table profiles');
       await pool.query(`
-      INSERT INTO profiles (firstname, lastname, email, role, image, password) VALUES 
+      INSERT INTO profiles (firstname, lastname, email, role, image, password) VALUES
         ('Akano', 'Ade', 'abati1.cole@ini.net', 'admin', 'images/pix1.png', '$2b$08$.8MyBoCqVYe58KKG0vlMHuW7LFLoaKdYJJw0LttRZm5UFi2iiMoyC'),
-        ('Marilyn', 'Cole', '0.61mary.cole@ini.net', 'admin', 'images/pix2.png', '$2b$08$XeG/JxMxMhh2K1xNv5Rsp.DeUaefk6zm1cVwh7hp98E7kDxiRmSq2'),
-        ('Ella', 'Mari', 'mary.cole@ini.net', 'store_attendant', 'images/pix10.png', '$2b$08$XeG/JxMxMhh2K1xNv5Rsp.DeUaefk6zm1cVwh7hp98E7kDxiRmSq2');
+        ('Marilyn', 'Cole', 'dupe.cole@yahoo.net', 'admin', 'images/pix2.png', '$2b$08$XeG/JxMxMhh2K1xNv5Rsp.DeUaefk6zm1cVwh7hp98E7kDxiRmSq2'),
+        ('Ella', 'Mari', 'mary.cole@gmail.net', 'store_attendant', 'images/pix10.png', '$2b$08$XeG/JxMxMhh2K1xNv5Rsp.DeUaefk6zm1cVwh7hp98E7kDxiRmSq2');
     `);
 
 
@@ -34,9 +34,9 @@ const Seed = {
        (2, 1, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:00:42.191778'),
        (2, 1, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:03:37.450926'),
        (2, 1, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:04:46.900825'),
-       (2, 1, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:07:06.864819'),
-       (2, 1, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:08:07.585420'),
-       (2, 1, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:08:38.010604');
+       (2, 2, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:07:06.864819'),
+       (2, 2, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:08:07.585420'),
+       (2, 3, 'Things fall apart', 'Book written by Chinua Achebe', 42.00, 3, '2018-10-31 23:08:38.010604');
     `);
       await process.exit(0);
     } catch (e) {
