@@ -1,6 +1,0 @@
-class dashboard {
-
-  static getMySales(){
-
-  }
-}

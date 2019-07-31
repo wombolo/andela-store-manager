@@ -9,4 +9,9 @@
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store
 
 API usage:
-Coming Soon
+
+## Setting Up:
+Create 2 databases named `andela-store-manager` and `andela-store-manager-testing`. 
+Then run `cp .env.sample .env ` in the project directory to create your environment variables, then complete the rest of the `.env` file with the appropriate variables as desired.
+
+### Running tests
