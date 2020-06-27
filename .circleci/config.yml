@@ -7,6 +7,7 @@ jobs:
         environment:
           DB_NAME_TESTING: andela-store-manager-testing
           DB_USER: postgres
+          DB_PASS: postgres
           DB_MAX: 10
           JWT_SECRET: rdfg$Wer6g
 
@@ -14,6 +15,7 @@ jobs:
       - image: postgres:9.6
         environment:
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: andela-store-manager-testing
     working_directory: ~/repo
 
